@@ -17,6 +17,14 @@ namespace c10 {
 // nullptr DataPtrs can still have a nontrivial device; this allows
 // us to treat zero-size allocations uniformly with non-zero allocations.
 //
+
+// DataPtr--
+//        |-UniqueVoidPtr ptr_
+//            |-void* data
+//            |-std::unique_ptr<..,..> ctx
+//              |- ctx itself, contains a data pointer and a delete function
+//              |- ctx deleter, used to delete ctx
+//        |-Device
 class C10_API DataPtr {
  private:
   // TODO: NOTE: ptr_ has a void* data and a std unique_ptr<ctx, deleter>
