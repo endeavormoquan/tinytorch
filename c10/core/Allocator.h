@@ -19,12 +19,12 @@ namespace c10 {
 //
 
 // DataPtr--
-//        |-UniqueVoidPtr ptr_
-//            |-void* data
-//            |-std::unique_ptr<..,..> ctx
-//              |- ctx itself, contains a data pointer and a delete function
-//              |- ctx deleter, used to delete ctx
-//        |-Device
+// -------|-UniqueVoidPtr ptr_
+// -----------|-void* data
+// -----------|-std::unique_ptr<..,..> ctx
+// -------------|- ctx itself, contains a data pointer and a delete function associated with data pointer
+// -------------|- ctx deleter, used to delete ctx
+// -------|-Device
 class C10_API DataPtr {
  private:
   // TODO: NOTE: ptr_ has a void* data and a std unique_ptr<ctx, deleter>
