@@ -17,6 +17,10 @@ file(GLOB C10_SRCS
         )
 file(GLOB_RECURSE C10_HEADERS *.h)
 add_library(c10 ${C10_SRCS} ${C10_HEADERS})
+
+find_package(Threads)
+target_link_libraries(c10 ${CMAKE_THREAD_LIBS_INIT})
+
 # If building shared library, set dllimport/dllexport proper.
 target_compile_options(c10 PRIVATE "-DC10_BUILD_MAIN_LIB")
 # Enable hidden visibility if compiler supports it.
@@ -38,3 +42,11 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
     $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
     $<INSTALL_INTERFACE:include>)
+
+# ---[ Installation
+install(TARGETS c10 LIBRARY DESTINATION lib)
+install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+        DESTINATION include
+        FILES_MATCHING PATTERN "*.h")
+install(FILES ${CMAKE_BINARY_DIR}/c10/macros/cmake_macros.h
+        DESTINATION include/c10/macros)
