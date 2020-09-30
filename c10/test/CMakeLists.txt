@@ -1,0 +1,17 @@
+# TODO: NOTE: I choose to use test instead of install the lib to test the code.
+# This file is copied from pytorch
+# ---[ Test binaries.
+
+if(BUILD_TEST)
+  file(GLOB_RECURSE C10_ALL_TEST_FILES *.cpp)
+  foreach(test_src ${C10_ALL_TEST_FILES})
+    get_filename_component(test_file_name ${test_src} NAME_WE)
+    set(test_name "c10_${test_file_name}")
+    add_executable(${test_name} "${test_src}")
+    target_link_libraries(${test_name} c10 gmock gtest gtest_main)
+    add_test(NAME ${test_name} COMMAND $<TARGET_FILE:${test_name}>)
+    if(INSTALL_TEST)
+      install(TARGETS ${test_name} DESTINATION test)
+    endif()
+  endforeach()
+endif()
