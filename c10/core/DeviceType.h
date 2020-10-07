@@ -14,11 +14,13 @@ namespace c10 {
 
 enum class DeviceType : int16_t {
   CPU = 0,
-  COMPILE_TIME_MAX_DEVICE_TYPES = 1,
+  FPGA = 1,
+  COMPILE_TIME_MAX_DEVICE_TYPES = 2,
   ONLY_FOR_TEST = 11111, // This device type is only for test.
 };
 
 constexpr DeviceType kCPU = DeviceType::CPU;
+constexpr DeviceType kFPGA = DeviceType::FPGA;
 
 // define explicit int constant
 constexpr int COMPILE_TIME_MAX_DEVICE_TYPES =

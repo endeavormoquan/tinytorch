@@ -9,6 +9,8 @@ std::string DeviceTypeName(DeviceType d, bool lower_case) {
     // on the fly, but this seemed a bit much.
     case DeviceType::CPU:
       return lower_case ? "cpu" : "CPU";
+    case DeviceType::FPGA:
+      return lower_case ? "fpga" : "FPGA";
     default:
       AT_ERROR(
           "Unknown device: ",
@@ -32,6 +34,7 @@ std::string DeviceTypeName(DeviceType d, bool lower_case) {
 bool isValidDeviceType(DeviceType d) {
   switch (d) {
     case DeviceType::CPU:
+    case DeviceType::FPGA:
       return true;
     default:
       return false;

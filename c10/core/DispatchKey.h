@@ -51,7 +51,7 @@ enum class DispatchKey : uint8_t {
   // how to implement operations on some device.
   CPU, // registered at build/aten/src/ATen/CPUType.cpp
   SparseCPU, // registered at build/aten/src/ATen/SparseCPUType.cpp
-
+  FPGA, // FIGURE: where to register FPGA? see code context for more info.
   // The meta function characterizes how an operation affects the metadata of a
   // tensor (shape, dtype) without doing any of the actual computation.  A
   // meta tensor can be used to dry run operators without actually doing

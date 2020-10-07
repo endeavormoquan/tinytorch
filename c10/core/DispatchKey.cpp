@@ -10,6 +10,8 @@ const char* toString(DispatchKey t) {
       return "CPU";
     case DispatchKey::SparseCPU:
       return "SparseCPU";
+    case DispatchKey::FPGA:
+      return "FPGA";
     case DispatchKey::Autograd:
       return "Autograd";
     case DispatchKey::BackendSelect:

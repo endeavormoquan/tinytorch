@@ -28,6 +28,7 @@ namespace c10{
 enum class Backend {
   CPU,
   SparseCPU,
+  FPGA,
   Undefined,
   NumOptions
 };
@@ -49,6 +50,8 @@ static inline Backend toDense(Backend b) {
       return Backend::CPU;
     case Backend::SparseCPU:
       return Backend::CPU;
+    case Backend::FPGA:
+      return Backend::FPGA;
     default:
       throw std::runtime_error("Unknown backend");
   }
@@ -59,6 +62,8 @@ static inline Backend dispatchKeyToBackend(DispatchKey t) {
     return Backend::CPU;
   } else if (t == DispatchKey::SparseCPU) {
     return Backend::SparseCPU;
+  } else if (t == DispatchKey::FPGA) {
+    return Backend::FPGA;
   } else if (t == DispatchKey::Undefined) {
     return Backend::Undefined;
   } else {
@@ -72,6 +77,8 @@ static inline DispatchKey backendToDispatchKey(Backend b) {
       return DispatchKey::CPU;
     case Backend::SparseCPU:
       return DispatchKey::SparseCPU;
+    case Backend::FPGA:
+      return DispatchKey::FPGA;
     case Backend::Undefined:
       return DispatchKey::Undefined;
     default:
@@ -85,6 +92,8 @@ static inline DeviceType backendToDeviceType(Backend b) {
       return DeviceType::CPU;
     case Backend::SparseCPU:
       return DeviceType::CPU;
+    case Backend::FPGA:
+      return DeviceType::FPGA;
     case Backend::Undefined:
       AT_ERROR("Undefined backend is not a valid device type");
     default:
@@ -98,6 +107,9 @@ static inline Backend backendToCPU(Backend b) {
       return Backend::CPU;
     case Backend::SparseCPU:
       return Backend::SparseCPU;
+    // FIGURE: why convert FPGA backend to CPU backend?
+    case Backend::FPGA:
+      return Backend::CPU;
     case Backend::Undefined:
       return Backend::Undefined;
     default:
@@ -105,27 +117,27 @@ static inline Backend backendToCPU(Backend b) {
   }
 }
 
-static inline Backend backendToCUDA(Backend b) {
-  switch (b) {
-    case Backend::CPU:
-    case Backend::SparseCPU:
-    case Backend::Undefined:
-      return Backend::Undefined;
-    default:
-      AT_ERROR("Unknown backend");
-  }
-}
+// static inline Backend backendToCUDA(Backend b) {
+//   switch (b) {
+//     case Backend::CPU:
+//     case Backend::SparseCPU:
+//     case Backend::Undefined:
+//       return Backend::Undefined;
+//     default:
+//       AT_ERROR("Unknown backend");
+//   }
+// }
 
-static inline Backend backendToHIP(Backend b) {
-  switch (b) {
-    case Backend::CPU:
-    case Backend::SparseCPU:
-    case Backend::Undefined:
-      return Backend::Undefined;
-    default:
-      AT_ERROR("Unknown backend");
-  }
-}
+// static inline Backend backendToHIP(Backend b) {
+//   switch (b) {
+//     case Backend::CPU:
+//     case Backend::SparseCPU:
+//     case Backend::Undefined:
+//       return Backend::Undefined;
+//     default:
+//       AT_ERROR("Unknown backend");
+//   }
+// }
 
 static inline const char* toString(Backend b) {
   switch (b) {
@@ -133,6 +145,8 @@ static inline const char* toString(Backend b) {
       return "CPU";
     case Backend::SparseCPU:
       return "SparseCPU";
+    case Backend::FPGA:
+      return "FPGA";
     default:
       return "UNKNOWN_BACKEND";
   }

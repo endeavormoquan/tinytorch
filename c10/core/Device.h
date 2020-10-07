@@ -77,15 +77,19 @@ struct C10_API Device final {
     return index_ != -1;
   }
 
-  /// Return true if the device is of CUDA type.
-  bool is_cuda() const noexcept {
-    // return type_ == DeviceType::CUDA;
-    return false;
-  }
+  // /// Return true if the device is of CUDA type.
+  // bool is_cuda() const noexcept {
+  //   // return type_ == DeviceType::CUDA;
+  //   return false;
+  // }
 
   /// Return true if the device is of CPU type.
   bool is_cpu() const noexcept {
     return type_ == DeviceType::CPU;
+  }
+
+  bool is_fpga() const noexcept {
+    return type_ == DeviceType::FPGA;
   }
 
   /// Same string as returned from operator<<.
